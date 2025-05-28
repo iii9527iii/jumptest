@@ -9,12 +9,11 @@
     const iosAppStoreURL = "https://apps.apple.com/tw/app/%E9%9B%B2%E7%AB%AF%E5%B0%8D%E8%AC%9B/id6738626135";
     const androidPlayStoreURL = "https://play.google.com/store/apps/details?id=com.dnake.smartlife.hongsheng";
 
-    let pageHidden = false;
+    let hasLeftPage = false;
 
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        pageHidden = true; // 使用者跳到 App
-      }
+    // ✅ 當頁面被隱藏或卸載時（用戶點開了 App）
+    window.addEventListener('pagehide', function () {
+      hasLeftPage = true;
     });
 
     function getOS() {
@@ -28,9 +27,9 @@
       const os = getOS();
       window.location.href = appScheme;
 
-      // 若未跳轉 App，則導向商店
+      // 1.5 秒後再確認是否仍在頁面，否則就跳商店
       setTimeout(() => {
-        if (!pageHidden) {
+        if (!hasLeftPage) {
           if (os === "iOS") {
             window.location.href = iosAppStoreURL;
           } else if (os === "Android") {
