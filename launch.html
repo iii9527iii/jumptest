@@ -11,7 +11,6 @@
 
     let hasLeftPage = false;
 
-    // ✅ 當頁面被隱藏或卸載時（用戶點開了 App）
     window.addEventListener('pagehide', function () {
       hasLeftPage = true;
     });
@@ -27,7 +26,6 @@
       const os = getOS();
       window.location.href = appScheme;
 
-      // 1.5 秒後再確認是否仍在頁面，否則就跳商店
       setTimeout(() => {
         if (!hasLeftPage) {
           if (os === "iOS") {
