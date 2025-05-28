@@ -1,0 +1,43 @@
+<!-- launch.html -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>正在開啟 App...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    const appScheme = "dnakesmartlifehongsheng://";
+    const iosAppStoreURL = "https://apps.apple.com/tw/app/%E9%9B%B2%E7%AB%AF%E5%B0%8D%E8%AC%9B/id6738626135"; // 替換為實際連結
+    const androidPlayStoreURL = "https://play.google.com/store/apps/details?id=com.dnake.smartlife.hongsheng"; // 替換為實際連結
+
+    function getOS() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      if (/android/i.test(ua)) return "Android";
+      if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) return "iOS";
+      return "unknown";
+    }
+
+    window.onload = function () {
+      const os = getOS();
+      const start = Date.now();
+
+      // 嘗試開啟 App
+      window.location.href = appScheme;
+
+      setTimeout(() => {
+        const elapsed = Date.now() - start;
+        if (elapsed < 2000) {
+          if (os === "iOS") {
+            window.location.href = iosAppStoreURL;
+          } else if (os === "Android") {
+            window.location.href = androidPlayStoreURL;
+          }
+        }
+      }, 1500);
+    };
+  </script>
+</head>
+<body>
+  <p style="text-align:center; padding: 30px;">正在開啟 App，請稍候...</p>
+</body>
+</html>
